@@ -16,17 +16,23 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'c9');
+$url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+//var_dump($url);
+$db_name = (getenv('CLEARDB_DATABASE_URL')) ? substr($url['path'], 1): 'c9';
+$db_user = (getenv('CLEARDB_DATABASE_URL')) ? $url['user']: getenv('C9_USER');
+$db_pass = (getenv('CLEARDB_DATABASE_URL')) ? $url['pass']:'';
+$db_host = (getenv('CLEARDB_DATABASE_URL')) ? $url['host']: getenv('IP');
+
+define('DB_NAME', $db_name);
 
 /** MySQL database username */
-define('DB_USER', getenv('C9_USER'));
+define('DB_USER', $db_user);
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', $db_pass);
 
 /** MySQL hostname */
-define('DB_HOST', getenv('IP'));
-
+define('DB_HOST', $db_host);
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
 
